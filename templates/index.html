@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Empleados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <form method="POST">
+            <h1 class="page-title">Plantilla Pausas Activas</h1>
+            <div class="form-group">
+                <label for="id_carnet">Ingrese el carnet:</label>
+                <input type="number" id="id_carnet" name="id_carnet" class="form-control"
+                    value="{{ request.form['id_carnet'] if request.form.get('id_carnet') else '' }}"
+                    oninput="document.getElementById('id_empleado').disabled = this.value.length > 0;">
+            </div>
+
+            <div class="form-group">
+                <label for="id_empleado">Ingrese el ID del empleado:</label>
+                <input type="number" id="id_empleado" name="id_empleado" class="form-control"
+                    value="{{ request.form['id_empleado'] if request.form.get('id_empleado') else '' }}"
+                    oninput="if(this.value.length > 5) this.value = this.value.slice(0, 5); document.getElementById('id_carnet').disabled = this.value.length > 0;">
+            </div>
+
+            <script>
+                document.getElementById('id_carnet').addEventListener('input', function (e) {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                });
+
+                document.getElementById('id_empleado').addEventListener('input', function (e) {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                });
+            </script>
+
+            <div class="form-group">
+                <label for="fecha_pausa">Seleccione la fecha de la pausa activa:</label>
+                <input type="datetime-local" id="fecha_pausa" name="fecha_pausa" class="form-control" required
+                    value="{{ request.form['fecha_pausa'] if request.form.get('fecha_pausa') else '' }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Consultar</button>
+        </form>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const fechaInput = document.getElementById('fecha_pausa');
+                if (!fechaInput.value) {
+                    const now = new Date();
+                    const offset = now.getTimezoneOffset() * 60000;
+                    const localISOTime = new Date(now - offset).toISOString().slice(0, 16);
+                    fechaInput.value = localISOTime;
+                }
+            });
+        </script>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <script>
+                    alert("{{ message }}");
+                </script>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% if empleado %}
+            <div class="card tarjeta-especial">
+                <form method="POST" action="{{ url_for('index') }}" id="guardar-form">
+                    <input type="hidden" name="empleado_id" value="{{ empleado['EmpBasic_EmpID'] if empleado else '' }}">
+                    <input type="hidden" name="nombre" value="{{ empleado['EmpBasic_Name'] if empleado else '' }}">
+                    <input type="hidden" name="departamento" value="{{ empleado['EmpBasic_JCDept'] if empleado else '' }}">
+                    <input type="hidden" name="fecha_pausa" value="{{ fecha_pausa }}">
+                    {% if consulta_realizada %}
+                    <div>
+                        <h4>Información del empleado:</h4>
+                        <p><strong>ID:</strong> {{ empleado['EmpBasic_EmpID'] }}</p>
+                        <p><strong>Nombre:</strong> {{ empleado['EmpBasic_Name'] }}</p>
+                        <p><strong>Área:</strong> {{ empleado['EmpBasic_JCDept'] }}</p>
+                    </div>
+                    <script>
+                        // Guardar la hora de inicio de sesión en el navegador
+                        localStorage.setItem("inicioSesion", new Date().toISOString());
+                         // Agregar tiempo de sesión al guardar en Excel
+                        document.getElementById("guardar-form").addEventListener("submit", function (e) {
+                            const inicio = new Date(localStorage.getItem("inicioSesion"));
+                            const fin = new Date();
+                            const duracionSegundos = Math.floor((fin - inicio) / 1000);
+
+                            const tiempoInput = document.createElement("input");
+                            tiempoInput.type = "hidden";
+                            tiempoInput.name = "tiempo_sesion_segundos";
+                            tiempoInput.value = duracionSegundos;
+                            this.appendChild(tiempoInput);
+
+                            localStorage.removeItem("inicioSesion");
+                        });
+                    </script>                    
+
+                    {% endif %}
+                </form>
+            </div>
+
+            <!-- Contenedor en fila para las opciones -->
+            <div class="d-flex flex-wrap justify-content-center mt-4 gap-3">
+                <div class="card option-card m-2" onclick="window.location.href='/pausa-corporales'">
+                    <h5 class="card-title">Movimientos y Estiramientos</h5>
+                    <p>Ejercicios para activar el cuerpo.</p>
+                    <button class="btn btn-card">Ver más</button>
+                </div>
+                <div class="card option-card m-2" onclick="window.location.href='/pausa-videos'">
+                    <h5 class="card-title">Enfoque Corporal</h5>
+                    <p>Actividades específicas de las partes del cuerpo.</p>
+                    <button class="btn btn-card">Ver más</button>
+                </div>
+                <div class="card option-card m-2" onclick="window.location.href='/pausa-mentales'">
+                    <h5 class="card-title">Pausas Mentales</h5>
+                    <p>Ejercicios para entrenar la mente.</p>
+                    <button class="btn btn-card">Ver más</button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const images = [
+                "{{ url_for('static', filename='images/background1.png') }}",
+                "{{ url_for('static', filename='images/background2.png') }}",
+                "{{ url_for('static', filename='images/background3.png') }}"
+            ];
+            let index = 0;
+            document.body.style.backgroundImage = `url('${images[0]}')`;
+            function changeBackground() {
+                index = (index + 1) % images.length;
+                document.body.style.backgroundImage = `url('${images[index]}')`;
+            }
+            setInterval(changeBackground, 10000);
+        });
+    </script>
+</body>
+
+</html>

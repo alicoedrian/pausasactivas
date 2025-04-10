@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimientos Corporales</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="pausas-corporales">
+    <div class="container mt-4 text-center">
+        <h1 class="page-title">Pausas Corporales ALICO</h1>
+    
+        <form method="POST"  class="pause-form" id="guardar-form">
+            <h3 class="welcome-text">Bienvenido, {{ empleado['nombre'] }}</h3>
+            <p class="instructions">¡Recuerda realizar tus pausas activas para mantenerte saludable!</p>
+            <label>
+                <input type="checkbox" name="pausas_realizadas" value="Sí">
+                Confirmo que realicé las pausas activas
+            </label>
+            <!-- ✅ NO incluir manualmente el input oculto -->
+            <button type="submit" name="guardar" class="btn btn-primary mt-3">Guardar en Excel</button>
+        </form>
+        
+        <script>
+            // Solo lo guarda si no existe aún
+            if (!localStorage.getItem("inicioSesion")) {
+                localStorage.setItem("inicioSesion", new Date().toISOString());
+            }
+        
+            document.getElementById("guardar-form").addEventListener("submit", function () {
+                const inicio = new Date(localStorage.getItem("inicioSesion"));
+                const fin = new Date();
+                const duracionSegundos = Math.floor((fin - inicio) / 1000);
+        
+                // ⏱️ Tiempo en segundos
+                const tiempoInput = document.createElement("input");
+                tiempoInput.type = "hidden";
+                tiempoInput.name = "tiempo_sesion_segundos";
+                tiempoInput.value = duracionSegundos;
+                this.appendChild(tiempoInput);
+        
+                // 🕒 Hora de inicio
+                const inicioInput = document.createElement("input");
+                inicioInput.type = "hidden";
+                inicioInput.name = "hora_inicio";
+                inicioInput.value = inicio.toLocaleTimeString();  // "HH:MM:SS"
+                this.appendChild(inicioInput);
+        
+                // 🕔 Hora de fin
+                const finInput = document.createElement("input");
+                finInput.type = "hidden";
+                finInput.name = "hora_fin";
+                finInput.value = fin.toLocaleTimeString();
+                this.appendChild(finInput);
+        
+                localStorage.removeItem("inicioSesion");
+            });
+        </script>        
+        
+        <div class="row justify-content-center mt-4">
+            <!-- Primera Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp">
+                    <h5 class="card-header bg-primary text-white"> Estirar los brazos</h5>
+                    <div class="card-body">
+                        <p class="card-title">Movimientos en los brazos</p>
+                        <img src="{{ url_for('static', filename='images/Brazos.png') }}" class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/Brazos.pdf') }}" 
+                            class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                            <p class="card-description">Ejercicios para estirar los brazos.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Segunda Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp">
+                    <h5 class="card-header bg-primary text-white">Estirar las manos</h5>
+                    <div class="card-body">
+                        <p class="card-title">Movimientos en las manos</p>
+                        <img src="{{ url_for('static', filename='images/Manos.png') }}" class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/Manos.pdf') }}" 
+                            class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                            <p class="card-description">Ejercicios para estirar las manos.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Tercera Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp">
+                    <h5 class="card-header bg-primary text-white">Movilidad en hombros</h5>
+                    <div class="card-body">
+                        <p class="card-title">Movimientos en los hombros</p>
+                        <img src="{{ url_for('static', filename='images/MovimientosHombro.png') }}" class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/MovimientosHombro.pdf') }}" 
+                            class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                            <p class="card-description">Ejercicios para mover los hombros.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Cuarta Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp">
+                    <h5 class="card-header bg-primary text-white">Dedos</h5>
+                    <div class="card-body">
+                        <p class="card-title">Movimientos en los dedos</p>
+                        <img src="{{ url_for('static', filename='images/Dedos.png') }}" class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/Dedos.pdf') }}" 
+                            class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                            <p class="card-description">Ejercicios para movidilad de los dedos.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Quinta Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp" >
+                    <h5 class="card-header bg-primary text-white">Caderas</h5>
+                    <div class="card-body">
+                        <p class="card-title">Movimientos en las caderas</p>
+                        <img src="{{ url_for('static', filename='images/Caderas.png') }}" class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/Caderas.pdf') }}" 
+                        class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                        <p class="card-description">Ejercicios para movidilad de cadera.</p>
+                    </div>
+                </div>
+            </div>    
+            <!-- Sexta Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp" >
+                    <h5 class="card-header bg-primary text-white">Espalda</h5>
+                    <div class="card-body">
+                        <p class="card-title">Movimientos en la espalda</p>
+                        <img src="{{ url_for('static', filename='images/Espalda.png') }}" 
+                            alt="Previsualización de Movimientos" 
+                            class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/Espalda.pdf') }}" 
+                        class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                        <p class="card-description">Ejercicios para estirar la espalda.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Septima Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp" >
+                    <h5 class="card-header bg-primary text-white">Bastón</h5>
+                    <div class="card-body">
+                        <p class="card-title">Movimientos con bastón</p>
+                        <img src="{{ url_for('static', filename='images/Baston.png') }}" 
+                            alt="Previsualización de Movimientos" 
+                            class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/Baston.pdf') }}" 
+                        class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                        <p class="card-description">Ejercicios para movilidad articular.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Octava Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp" >
+                    <h5 class="card-header bg-primary text-white">Hombros</h5>
+                    <div class="card-body">
+                        <p class="card-title">Movilidad de hombros con apoyo</p>
+                        <img src="{{ url_for('static', filename='images/Hombro2.png') }}" 
+                            alt="Previsualización de Movimientos" 
+                            class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/Hombro2.pdf') }}" 
+                        class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                        <p class="card-description">Ejercicios para movilidad de hombros.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Novena Card -->
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                <div class="card card_corp" >
+                    <h5 class="card-header bg-primary text-white">Espalda y cuello</h5>
+                    <div class="card-body">
+                        <p class="card-title">Espalda y cuello</p>
+                        <img src="{{ url_for('static', filename='images/Espaldacuello.png') }}" 
+                            alt="Previsualización de Movimientos" 
+                            class="img-fluid">
+                        <a href="{{ url_for('static', filename='images/Espaldacuello.pdf') }}" 
+                        class="btn btn-outline-primary btn-block" target="_blank">Ver PDF</a>
+                        <p class="card-description">Ejercicios para movilidad de Espalda y Cuello.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">
+            ⬅ Volver a la Página Principal
+        </a>
+    </div>   
+</body>
+</html>

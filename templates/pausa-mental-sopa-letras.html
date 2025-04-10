@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sopa de letras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="sopa-letras">
+    <div class="container text-center mt-4">
+        <h1 class="page-title">Sopa de Letras ALICO</h1>
+        <h3 class="welcome-text">Bienvenido, {{ empleado['nombre'] }}</h3>
+        <p class="instructions">¡Encuentra todas las palabras y completa el desafío!</p>
+
+        <div id="timer" class="cronometro">Tiempo transcurrido: <span id="tiempo">00:00</span></div>
+        <button id="reset-button" class="btn btn-danger mt-3">Reiniciar Juego</button>
+
+        <!-- Sopa de letras -->
+        <div class="sopa-container">
+            <div id="grid-container" class="grid"></div>  
+            <div id="word-list" class="word-list">
+                <h3>Palabras a encontrar:</h3>
+                <ul>
+                    <li data-word="ALICO">ALICO</li>
+                    <li data-word="EMPAQUES">EMPAQUES</li>
+                    <li data-word="EXTRUSION">EXTRUSION</li>
+                    <li data-word="FUNDAS">FUNDAS</li>
+                    <li data-word="IMPRESIÓN">IMPRESIÓN</li>
+                    <li data-word="CORTE">CORTE</li>
+                    <li data-word="LAMINACIÓN">LAMINACIÓN</li>
+                    <li data-word="CORRUGADO">CORRUGADO</li>
+                    <li data-word="SELLADO">SELLADO</li>
+                    <li data-word="INSERTADORAS">INSERTADORAS</li>
+                    <li data-word="ADITAMENTOS">ADITAMENTOS</li>
+                </ul>
+            </div>
+        </div>
+         <!-- Confirmación de pausa activa -->
+        <form method="POST" class="pause-form"  id="guardar-form">
+            <label>
+                <input type="checkbox" name="pausas_realizadas" value="Sí">
+                Confirmo que realicé las pausas activas
+            </label>
+            <button type="submit" name="guardar" class="btn btn-primary mt-3">Guardar en Excel</button>
+        </form>
+        <script>
+            // Solo lo guarda si no existe aún
+            if (!localStorage.getItem("inicioSesion")) {
+                localStorage.setItem("inicioSesion", new Date().toISOString());
+            }
+        
+            document.getElementById("guardar-form").addEventListener("submit", function () {
+                const inicio = new Date(localStorage.getItem("inicioSesion"));
+                const fin = new Date();
+                const duracionSegundos = Math.floor((fin - inicio) / 1000);
+        
+                // ⏱️ Tiempo en segundos
+                const tiempoInput = document.createElement("input");
+                tiempoInput.type = "hidden";
+                tiempoInput.name = "tiempo_sesion_segundos";
+                tiempoInput.value = duracionSegundos;
+                this.appendChild(tiempoInput);
+        
+                // 🕒 Hora de inicio
+                const inicioInput = document.createElement("input");
+                inicioInput.type = "hidden";
+                inicioInput.name = "hora_inicio";
+                inicioInput.value = inicio.toLocaleTimeString();  // "HH:MM:SS"
+                this.appendChild(inicioInput);
+        
+                // 🕔 Hora de fin
+                const finInput = document.createElement("input");
+                finInput.type = "hidden";
+                finInput.name = "hora_fin";
+                finInput.value = fin.toLocaleTimeString();
+                this.appendChild(finInput);
+        
+                localStorage.removeItem("inicioSesion");
+            });
+        </script>
+        
+        <a href="{{ url_for('index') }}" class="btn btn-secondary btn-back">
+            ⬅ Volver a la Página Principal
+        </a>
+    </div>
+    <script src="{{ url_for('static', filename='pausas.js') }}"></script>
+</body>
+</html>

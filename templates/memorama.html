@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memorama - Pausa Mental</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="memorama-body">
+    <div class="container text-center mt-4">
+        <h1 class="page-title">Memorama ALICO</h1>
+        <h3 class="welcome-text">Bienvenido, {{ empleado['nombre'] }}</h3>
+        <p class="instructions">Encuentra todas las parejas en el menor tiempo posible.</p>
+        
+        <!-- Cronómetro -->
+        <div id="timer" class="cronometro">Tiempo transcurrido: <span id="tiempo">00:00</span></div>
+        
+        <!-- Tablero del Memorama -->
+        <div class="memorama-container">
+            <div class="grid-memorama" id="memorama"></div>
+        </div>
+
+        <!-- Botón de reinicio -->
+        <button id="reset-button" class="btn btn-primary mt-3">Reiniciar Juego</button>
+
+        <form method="POST" class="pause-form"  id="guardar-form">
+            <label>
+                <input type="checkbox" name="pausas_realizadas" value="Sí">
+                Confirmo que realicé las pausas activas
+            </label>
+            <button type="submit" name="guardar" class="btn btn-primary mt-3">Guardar en Excel</button>
+        </form>
+        <script>
+            // Solo lo guarda si no existe aún
+            if (!localStorage.getItem("inicioSesion")) {
+                localStorage.setItem("inicioSesion", new Date().toISOString());
+            }
+        
+            document.getElementById("guardar-form").addEventListener("submit", function () {
+                const inicio = new Date(localStorage.getItem("inicioSesion"));
+                const fin = new Date();
+                const duracionSegundos = Math.floor((fin - inicio) / 1000);
+        
+                // ⏱️ Tiempo en segundos
+                const tiempoInput = document.createElement("input");
+                tiempoInput.type = "hidden";
+                tiempoInput.name = "tiempo_sesion_segundos";
+                tiempoInput.value = duracionSegundos;
+                this.appendChild(tiempoInput);
+        
+                // 🕒 Hora de inicio
+                const inicioInput = document.createElement("input");
+                inicioInput.type = "hidden";
+                inicioInput.name = "hora_inicio";
+                inicioInput.value = inicio.toLocaleTimeString();  // "HH:MM:SS"
+                this.appendChild(inicioInput);
+        
+                // 🕔 Hora de fin
+                const finInput = document.createElement("input");
+                finInput.type = "hidden";
+                finInput.name = "hora_fin";
+                finInput.value = fin.toLocaleTimeString();
+                this.appendChild(finInput);
+        
+                localStorage.removeItem("inicioSesion");
+            });
+        </script>
+
+        <a href="{{ url_for('index') }}" class="btn btn-secondary btn-back mt-3">
+            ⬅ Volver a la Página Principal
+        </a>
+    </div>
+    <script src="{{ url_for('static', filename='pausas.js') }}"></script>
+</body>
+</html>

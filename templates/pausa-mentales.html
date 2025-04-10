@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pausas Mentales</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="pausas-mentales">
+    <div class="container mt-5">
+        <form action="">
+            <h1 class="page-title" style="color: rgb(0, 0, 0);">Pausas Mentales ALICO</h1>           
+            <div class="row justify-content-center mt-4">
+                <!-- Card 1: Sopa de Letras -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mental-card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5>Sopa de Letras</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Encuentra las palabras de la lista.</p>
+                            <a href="/pausa-mental-sopa-letras" class="btn btn-outline-primary btn-block">Jugar Sopa de Letras</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Rompecabezas -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mental-card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5>Rompecabezas</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Desafía tu mente armando la figura.</p>
+                            <a href="/pausa-mental-rompecabezas" class="btn btn-outline-primary btn-block">Jugar Rompecabezas</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3: Memorama -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mental-card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h5>Memorama</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Encuentra las parejas.</p>
+                            <a href="/memorama" class="btn btn-outline-primary btn-block">Jugar Memorama</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="card mental-card shadow">
+                        <div class="video-card">
+                            <h5 class="video-title">Juegos mentales</h5>
+                            <video controls class="video-player">
+                                <source src="{{ url_for('static', filename='videos/ACTIVA TU CEREBRO AL 100 por ciento con este test de VELOCIDAD MENTAL.mp4') }}" type="video/mp4">
+                                Tu navegador no soporta videos.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+            <!-- Botón de volver -->
+            <div class="mt-4">
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-back">
+                    ⬅ Volver a la Página Principal
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

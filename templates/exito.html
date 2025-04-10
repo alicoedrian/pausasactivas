@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éxito</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="alert alert-success text-center">
+            <h4 class="alert-heading">¡Éxito!</h4>
+            <h2 class="text-center">¡Gracias, {{ empleado['nombre'] }}!</h2>
+            <p>Los datos se han guardado correctamente.</p>
+            <hr>
+            <p class="mb-0">Regresa al inicio para registrar otro empleado.</p>
+        </div>
+        <div class="text-center">
+            <a href="/" class="btn btn-primary">Regresar al inicio</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const images = [
+                "{{ url_for('static', filename='images/background1.png') }}",
+                "{{ url_for('static', filename='images/cafe-y-chocolate-1.webp') }}",
+                "{{ url_for('static', filename='images/corporativo.png') }}"
+            ];
+    
+            let index = 0;
+    
+            // ⚡ Cargar la primera imagen de inmediato
+            document.body.style.backgroundImage = `url('${images[0]}')`;
+    
+            function changeBackground() {
+                index = (index + 1) % images.length; // Pasar a la siguiente imagen
+                document.body.style.backgroundImage = `url('${images[index]}')`;
+            }
+    
+            setInterval(changeBackground, 10000); // ⏳ Cambia cada 10 segundos (ajusta según prefieras)
+        });
+    </script>  
+</body>
+</html>

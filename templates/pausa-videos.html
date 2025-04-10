@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pausas Activas - Videos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="videos-body">
+    <div class="container text-center mt-4">
+        <h1 class="page-title">Videos de Pausas Activas</h1>
+        <h3 class="welcome-text">Bienvenido, {{ empleado['nombre'] }}</h3>
+        <p class="instructions">Selecciona un video para realizar la pausa activa.</p>
+
+        <div class="row justify-content-center">
+            <!-- Video 1 -->
+            <div class="col-md-4">
+                <div class="video-card">
+                    <h5 class="video-title">Estiramientos</h5>
+                    <video controls class="video-player">
+                        <source src="{{ url_for('static', filename='videos/Rutinas 3 de Pausas Activas.mp4') }}" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="col-md-4">
+                <div class="video-card">
+                    <h5 class="video-title">Movilidad Articular</h5>
+                    <video controls class="video-player">
+                        <source src="{{ url_for('static', filename='videos/Rutina 9 de Pausas Activas.mp4') }}" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="col-md-4">
+                <div class="video-card">
+                    <h5 class="video-title">Flexibilidad</h5>
+                    <video controls class="video-player">
+                        <source src="{{ url_for('static', filename='videos/Pausas saludables_ flexibilidad.mp4') }}" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="video-card">
+                    <h5 class="video-title">Movimientos preventivos</h5>
+                    <video controls class="video-player">
+                        <source src="{{ url_for('static', filename='videos/Pausas saludables_ movimiento articular.mp4') }}" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="video-card">
+                    <h5 class="video-title">Estiramientos</h5>
+                    <video controls class="video-player">
+                        <source src="{{ url_for('static', filename='videos/Rutina 4 de Pausas Activas.mp4') }}" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="video-card">
+                    <h5 class="video-title">Estiramientos</h5>
+                    <video controls class="video-player">
+                        <source src="{{ url_for('static', filename='videos/CuidarteEsCuidarnos pausas activas.mp4') }}" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+            </div>
+        </div>
+        <form method="POST" class="pause-form"  id="guardar-form">
+            <label>
+                <input type="checkbox" name="pausas_realizadas" value="Sí">
+                Confirmo que realicé las pausas activas
+            </label>
+            <button type="submit" name="guardar" class="btn btn-primary mt-3">Guardar en Excel</button>
+        </form>
+        <script>
+            // Solo lo guarda si no existe aún
+            if (!localStorage.getItem("inicioSesion")) {
+                localStorage.setItem("inicioSesion", new Date().toISOString());
+            }
+        
+            document.getElementById("guardar-form").addEventListener("submit", function () {
+                const inicio = new Date(localStorage.getItem("inicioSesion"));
+                const fin = new Date();
+                const duracionSegundos = Math.floor((fin - inicio) / 1000);
+        
+                // ⏱️ Tiempo en segundos
+                const tiempoInput = document.createElement("input");
+                tiempoInput.type = "hidden";
+                tiempoInput.name = "tiempo_sesion_segundos";
+                tiempoInput.value = duracionSegundos;
+                this.appendChild(tiempoInput);
+        
+                // 🕒 Hora de inicio
+                const inicioInput = document.createElement("input");
+                inicioInput.type = "hidden";
+                inicioInput.name = "hora_inicio";
+                inicioInput.value = inicio.toLocaleTimeString();  // "HH:MM:SS"
+                this.appendChild(inicioInput);
+        
+                // 🕔 Hora de fin
+                const finInput = document.createElement("input");
+                finInput.type = "hidden";
+                finInput.name = "hora_fin";
+                finInput.value = fin.toLocaleTimeString();
+                this.appendChild(finInput);
+        
+                localStorage.removeItem("inicioSesion");
+            });
+        </script>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary btn-back mt-3">
+            ⬅ Volver a la Página Principal
+        </a>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const images = [
+                "{{ url_for('static', filename='images/background1.png') }}",
+                "{{ url_for('static', filename='images/corporativo.png') }}",
+                "{{ url_for('static', filename='images/pergamino.jpg') }}"
+            ];
+            let index = 0;
+            document.body.style.backgroundImage = `url('${images[0]}')`;
+            function changeBackground() {
+                index = (index + 1) % images.length;
+                document.body.style.backgroundImage = `url('${images[index]}')`;
+            }
+            setInterval(changeBackground, 10000);
+        });
+    </script>
+</body>
+</html>

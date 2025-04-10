@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rompecabezas ALICO</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="rompecabezas-page">
+    <div class="container text-center mt-4">
+        <h1 class="page-title">Rompecabezas ALICO</h1>
+        <h3 class="welcome-text">Bienvenido, {{ empleado['nombre'] }}</h3>
+        <p class="instructions">¡Arma el rompecabezas para completar el desafío!</p>
+        
+
+        <!-- Confirmación de pausa activa -->
+        <form method="POST" class="pause-form"  id="guardar-form">
+            <label>
+                <input type="checkbox" name="pausas_realizadas" value="Sí">
+                Confirmo que realicé las pausas activas
+            </label>
+            <button type="submit" name="guardar" class="btn btn-primary mt-3">Guardar en Excel</button>
+        </form>
+        <script>
+            // Solo lo guarda si no existe aún
+            if (!localStorage.getItem("inicioSesion")) {
+                localStorage.setItem("inicioSesion", new Date().toISOString());
+            }
+        
+            document.getElementById("guardar-form").addEventListener("submit", function () {
+                const inicio = new Date(localStorage.getItem("inicioSesion"));
+                const fin = new Date();
+                const duracionSegundos = Math.floor((fin - inicio) / 1000);
+        
+                // ⏱️ Tiempo en segundos
+                const tiempoInput = document.createElement("input");
+                tiempoInput.type = "hidden";
+                tiempoInput.name = "tiempo_sesion_segundos";
+                tiempoInput.value = duracionSegundos;
+                this.appendChild(tiempoInput);
+        
+                // 🕒 Hora de inicio
+                const inicioInput = document.createElement("input");
+                inicioInput.type = "hidden";
+                inicioInput.name = "hora_inicio";
+                inicioInput.value = inicio.toLocaleTimeString();  // "HH:MM:SS"
+                this.appendChild(inicioInput);
+        
+                // 🕔 Hora de fin
+                const finInput = document.createElement("input");
+                finInput.type = "hidden";
+                finInput.name = "hora_fin";
+                finInput.value = fin.toLocaleTimeString();
+                this.appendChild(finInput);
+        
+                localStorage.removeItem("inicioSesion");
+            });
+        </script>
+
+        <!-- Contenedor del rompecabezas -->
+        <div class="puzzle-container"> 
+            <h4 class="mt-3">Imagen a resolver:</h4>
+            <img id="imagen-guia" src="{{ url_for('static', filename='images/logo_redondo.png') }}" 
+                class="puzzle-preview" alt="Previsualización del Rompecabezas">
+            <!-- Cronómetro -->
+            <div id="timer" class="cronometro">Tiempo transcurrido: <span id="tiempo">00:00</span></div>
+            <canvas id="puzzleCanvas" width="400" height="400"></canvas>
+            
+            <button id="reset-button" class="btn btn-warning mt-3">Reiniciar</button>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="btn btn-secondary btn-back">
+            ⬅ Volver a la Página Principal
+        </a>
+    </div>
+
+    <script>
+        const imageUrl = "{{ url_for('static', filename='images/logo_redondo.png') }}";
+    </script>
+    <script src="{{ url_for('static', filename='pausas.js') }}"></script>
+</body>
+</html>

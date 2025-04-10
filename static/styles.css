@@ -1,0 +1,586 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-size: cover; /* Mantiene la proporción de la imagen */
+    background-repeat: no-repeat; /* Evita repeticiones */
+    background-position: center center; /* Centra la imagen */
+    background-attachment: fixed; /* Mantiene la imagen fija */
+    transition: background-image 1s ease-in-out;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para el carrusel */
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 100vw; /* Ocupa todo el ancho del viewport */
+    height: 100vh; /* Ocupa toda la altura del viewport */
+    overflow: hidden;
+    border-radius: 0; /* Quita bordes redondeados en móviles */
+}
+
+.carousel img {
+    width: 100%; /* Ajusta la imagen al ancho del contenedor */
+    height: 100%; /* Ajusta la imagen a la altura del contenedor */
+    object-fit: cover; /* Evita distorsión y mantiene proporción */
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0; /* Comienza invisible */
+    transition: opacity 2s ease-in-out; /* Transición suave */
+}
+
+.carousel img.active {
+    opacity: 1; /* Se muestra completamente */
+}
+
+@keyframes fade-in {
+    0% { opacity: 0; filter: brightness(1.5); } /* Comienza clara y casi invisible */
+    50% { opacity: 0.5; filter: brightness(1.2); } /* Aumenta opacidad y oscurece un poco */
+    100% { opacity: 1; filter: brightness(1); } /* Aparece completamente con color normal */
+}
+
+.carousel img.active {
+    animation: fade-in 3s ease-in-out;
+}
+
+h1.page-title {
+    color: #0056b3;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+form {
+    background: #f2f4f7b9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input.form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+button.btn-primary {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+button.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.card.tarjeta-especial {
+    background-color: #fff;
+    border-left: 5px solid #f1c40f;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.card h4 {
+    font-size: 1.2rem;
+    color: #0056b3;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card.option-card {
+    background-color: #9ac3f1;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card.option-card:hover {
+    transform: scale(1.05);
+    background-color:  #fccc0a;
+}
+
+.card.option-card .btn-card {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 8px 15px;
+    transition: background 0.3s;
+}
+
+.card.option-card .btn-card:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .carousel {
+        height: 60vh; /* En móviles, reduce la altura */
+    }
+
+    .carousel img {
+        object-fit: contain; /* Muestra la imagen completa sin cortar */
+    }
+}
+
+/* AQUI EMPIEZA EL CSS DE PAUSAS CORPORALES Y LAS CARDS*/
+.card_corp {
+    width: 100%;
+    max-width: 230px; /* Tamaño ajustado */
+    padding: 10px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgb(4, 131, 250);
+}
+
+.card_corp:hover {
+    transform: scale(1.05);
+}
+
+.card_corp img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+@keyframes fondoDinamico {
+    0% { background-color: #64bbf9; }
+    50% { background-color: #8caad1; }
+    100% { background-color: #a7a8a9; }
+}
+
+body.pausas-corporales {
+    animation: fondoDinamico 10s infinite alternate;
+}
+
+/* front de redireccion de pausas mentales*/
+/* Fondo y colores para la vista de Pausas Mentales */
+body.pausas-mentales {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(227, 242, 253, 0.2)), 
+                url("../static/images/cafe_tostao.jpg"); /* Ruta de la imagen */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-align: center;
+    padding-top: 50px;
+    image-rendering: auto;
+}
+
+/* Cards con mejor diseño */
+.mental-card {
+    transition: transform 0.3s ease-in-out;
+    border-radius: 10px;
+    height: auto;
+}
+
+.mental-card:hover {
+    transform: scale(1.05);
+}
+
+/* Botón de regreso estilizado */
+.btn-back {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+
+/* Efecto de opacidad al pasar el mouse */
+.corporate-image-container img:hover {
+    opacity: 1;
+}
+
+/* ---------------- Sopa de Letras ---------------- */
+body.sopa-letras {
+    background: linear-gradient(to bottom, #ffffff, #e3f2fd); /* Fondo con degradado */
+    text-align: center;
+    padding-top: 20px;
+}
+
+/* Estilos para el título */
+.page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #004085; /* Azul corporativo */
+    margin-bottom: 20px;
+}
+
+
+
+/* Contenedor de la sopa de letras */
+.sopa-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* Estilos de la cuadrícula de la sopa de letras */
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(15, 40px); /* 15 columnas de 40px */
+    grid-template-rows: repeat(15, 40px); /* 15 filas de 40px */
+    gap: 3px;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Celdas individuales de la sopa de letras */
+.letter-cell {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 40px;
+    border: 2px solid #0056b3;
+    color: #0056b3;
+    background: #ffffff;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.1s;
+}
+
+/* Efecto al seleccionar */
+.letter-cell:hover {
+    background: #ff9800;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* Letras seleccionadas */
+.letter-cell.selected {
+    background: #007bff;
+    color: white;
+}
+
+/* Letras encontradas */
+.letter-cell.found {
+    background: #4caf50;
+    color: white;
+    font-weight: bold;
+}
+
+/* Lista de palabras */
+.word-list {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+}
+
+.word-list h3 {
+    color: #004085;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.word-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.word-list li {
+    font-size: 1.2rem;
+    padding: 5px;
+    color: #0056b3;
+    font-weight: bold;
+}
+
+/* Palabras encontradas en la lista */
+.word-list li.found {
+    text-decoration: line-through;
+    color: green;
+}
+
+/* Botón de volver */
+.btn-back {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+}
+
+/* ---------------- Página de Rompecabezas ---------------- */
+body.rompecabezas-page {
+    background: linear-gradient(to bottom, #ffffff, #e3f2fd);
+    text-align: center;
+    padding-top: 20px;
+}
+
+/* Título */
+.page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #004085;
+    margin-bottom: 20px;
+}
+
+/* Contenedor del rompecabezas */
+.puzzle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen de previsualización */
+.puzzle-preview {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Canvas del rompecabezas */
+#puzzleCanvas {
+    border: 2px solid #0056b3;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Botón de reinicio */
+#reset-button {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+}
+
+#reset-button:hover {
+    background-color: #e68a00;
+}
+
+/* Botón de volver */
+.btn-back {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+}
+
+
+/* Fondo con degradado y centrado */
+.memorama-body {
+    background: linear-gradient(to bottom, #ffffff, #e3f2fd);
+    text-align: center;
+    padding-top: 50px;
+}
+
+/* Tablero de cartas */
+.grid-memorama {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    justify-content: center;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+/* Estilo de las cartas */
+.card-memorama {
+    width: 100px;
+    height: 100px;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+/* Efecto de carta volteada */
+.card-memorama.flipped {
+    background-color: #007bff;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+/* Cronómetro */
+.cronometro {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #004080;
+}
+
+/* Botón de reinicio */
+#reset-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    transition: background 0.3s;
+    margin-top: 20px;
+}
+
+#reset-button:hover {
+    background-color: #0056b3;
+}
+
+/* Botón de regreso */
+.btn-back {
+    background-color: #004080;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    background-color: #002860;
+}
+
+/* Fondo y estructura */
+.videos-body {
+    background: linear-gradient(to bottom, #ffffff, #e3f2fd);
+    text-align: center;
+    padding-top: 50px;
+}
+
+/* Diseño de las tarjetas de video */
+.video-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+/* Títulos de los videos */
+.video-title {
+    font-size: 1.2rem;
+    color: #004080;
+    font-weight: bold;
+}
+
+/* Ajustes para los videos */
+.video-player {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Botón de regreso */
+.btn-back {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.videos-body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 1;
+}
+
+.videos-body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.2); /* Degradado blanco con opacidad */
+    z-index: -1;
+}
+
+.video-card {
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco casi sólido */
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    transition: transform 0.2s ease;
+}
+
+.video-card:hover {
+    transform: scale(1.03);
+}
+
+.video-title {
+    font-weight: bold;
+    color: #004080;
+    margin-bottom: 10px;
+}
+
+.video-player {
+    width: 100%;
+    border-radius: 10px;
+}
+
+ 
