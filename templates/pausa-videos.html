@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="videos-body">
+<body class="container-fluid videos-body">
     <div class="container text-center mt-4">
         <h1 class="page-title">Videos de Pausas Activas</h1>
         <h3 class="welcome-text">Bienvenido, {{ empleado['nombre'] }}</h3>
@@ -15,7 +15,7 @@
 
         <div class="row justify-content-center">
             <!-- Video 1 -->
-            <div class="col-md-4">
+            <div class="col-12 col-sm-6 col-md-4">
                 <div class="video-card">
                     <h5 class="video-title">Estiramientos</h5>
                     <video controls class="video-player">
@@ -26,7 +26,7 @@
             </div>
 
             <!-- Video 2 -->
-            <div class="col-md-4">
+            <div class="col-12 col-sm-6 col-md-4">
                 <div class="video-card">
                     <h5 class="video-title">Movilidad Articular</h5>
                     <video controls class="video-player">
@@ -37,7 +37,7 @@
             </div>
 
             <!-- Video 3 -->
-            <div class="col-md-4">
+            <div class="col-12 col-sm-6 col-md-4">
                 <div class="video-card">
                     <h5 class="video-title">Flexibilidad</h5>
                     <video controls class="video-player">
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-sm-6 col-md-4">
                 <div class="video-card">
                     <h5 class="video-title">Movimientos preventivos</h5>
                     <video controls class="video-player">
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-sm-6 col-md-4">
                 <div class="video-card">
                     <h5 class="video-title">Estiramientos</h5>
                     <video controls class="video-player">
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-sm-6 col-md-4">
                 <div class="video-card">
                     <h5 class="video-title">Estiramientos</h5>
                     <video controls class="video-player">
@@ -76,6 +76,7 @@
                     </video>
                 </div>
             </div>
+
         </div>
         <form method="POST" class="pause-form"  id="guardar-form">
             <label>
@@ -140,4 +141,16 @@
         });
     </script>
 </body>
+<footer style="
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(0.1px);
+  padding: 20px;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+  color: #333;">
+  <p>&copy; 2025 ALICO. All rights reserved.</p>
+  <p><strong>EE</strong></p>
+</footer>
 </html>
