@@ -265,13 +265,36 @@ function updateWordList() {
 
 // Función para añadir eventos
 function addEvents() {
-    const cells = document.querySelectorAll('.letter-cell'); // Selección de las celdas
+    const cells = document.querySelectorAll('.letter-cell');
+
     cells.forEach((cell) => {
-        cell.addEventListener('mousedown', () => startSelecting(cell)); // Al hacer clic comenzamos
-        cell.addEventListener('mouseover', () => continueSelecting(cell)); // Mientras se pasa el mouse, continuamos
-        cell.addEventListener('mouseup', () => endSelecting(cell)); // Cuando se suelta el clic, verificamos
+        // Eventos para mouse
+        cell.addEventListener('mousedown', () => startSelecting(cell));
+        cell.addEventListener('mouseover', () => continueSelecting(cell));
+        cell.addEventListener('mouseup', () => endSelecting(cell));
+    });
+
+    // Eventos globales para touch (pantalla táctil)
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.addEventListener('touchstart', (e) => {
+        const cell = getCellFromTouch(e.touches[0]);
+        if (cell) startSelecting(cell);
+        e.preventDefault();
+    });
+
+    gridContainer.addEventListener('touchmove', (e) => {
+        const cell = getCellFromTouch(e.touches[0]);
+        if (cell) continueSelecting(cell);
+        e.preventDefault();
+    });
+
+    gridContainer.addEventListener('touchend', (e) => {
+        const cell = getCellFromTouch(e.changedTouches[0]);
+        if (cell) endSelecting(cell);
+        e.preventDefault();
     });
 }
+
 
 
 function areCellsAligned(cells) {
@@ -323,7 +346,13 @@ document.getElementById("reset-button").addEventListener("click", function () {
     startWordSearch(); // 🔹 Reiniciar la sopa de letras
 });
 
-
+function getCellFromTouch(touch) {
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (el && el.classList.contains('letter-cell')) {
+        return el;
+    }
+    return null;
+}
 
 
 
